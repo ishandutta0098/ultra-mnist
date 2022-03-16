@@ -22,7 +22,7 @@ def load_config(config_file):
     
     config_path = os.path.join('configuration', config_file)
     
-    with open (config_path) ass file:
+    with open (config_path) as file:
         config = yaml.safe_load(file)
         
     return config
@@ -86,4 +86,3 @@ def get_oof_score(oof_file_path):
     accuracy = (np.sum(np.array(target) == np.array(pred))/len(target)) * 100
     
     print(f"Out of fold Accuracy: {accuracy}")
-        
