@@ -1,5 +1,0 @@
-DATA_DIRECTORY: input
-TRAIN_CSV: input/train.csv
-SUBMISSION_CSV: input/sample_submission.csv
-
-SEED: 42
