@@ -66,7 +66,7 @@ def prepare_test_loader(cfg, df_test):
         test_ids (list): List of test images ids
     """
 
-    test_dataset = dataset.FaceFeatureDataset(
+    test_dataset = dataset.ImageClassificationDataset(
                 df_test, 
                 transforms=augmentations.get_transforms(cfg, "valid")
                 )
