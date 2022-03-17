@@ -2,3 +2,4 @@ input/
 **/*.ipynb_checkpoints/
 test_notebook.ipynb 
 wandb
+__pycache__/
