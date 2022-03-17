@@ -1,5 +1,4 @@
 # Project Utility File
-
 import os
 import yaml
 import random
@@ -7,6 +6,7 @@ import random
 import pandas as pd 
 import numpy as np 
 
+from sklearn.model_selection import StratifiedKFold
 import torch
 
 def load_config(config_file):
@@ -47,6 +47,28 @@ def set_seed(SEED=42):
     
 set_seed()
 
+def get_skfold(df):
+    """
+    Function to split the dataset into stratified kfolds
+    
+    Args: 
+        df (pandas dataframe): Dataframe to generate folds
+    
+    Returns:
+        df (pandas dataframe): DataFrame with folds
+    """
+    
+    skf = StratifiedKFold(
+                    n_splits = 5,
+                    shuffle = True,
+                    random_state = 42
+                    )
+    
+    for fold, (_, val_) in enumerate(skf.split(X = df, y=df.target)):
+        df.loc[val_, "fold"] = fold
+        
+    return df
+
 def save_oof(id, target, pred, fold, oof_file_path):
     """
     Function to save out of fold predictions.
@@ -86,3 +108,19 @@ def get_oof_score(oof_file_path):
     accuracy = (np.sum(np.array(target) == np.array(pred))/len(target)) * 100
     
     print(f"Out of fold Accuracy: {accuracy}")
+
+def get_image_path(df, data):
+    """
+    Function to obtain the image paths.
+    
+    Args: 
+        df (pandas dataframe): Dataframe with image ids
+        data (str): Train or Test Data
+    
+    Returns:
+        df (pandas dataframe): DataFrame with Image Paths
+    """
+    
+    df['image_path'] = ["input/" + data + "/" + x + ".jpeg" for x in df['id']]
+    
+    return df
