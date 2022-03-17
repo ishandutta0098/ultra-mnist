@@ -60,7 +60,8 @@ if __name__ == "__main__":
         weights = None
 
     if args.check == True:
-        df_train = df_train.head(1000)
+        df_train = df_train.head(100)
+        df_valid = df_valid.head(100)
 
     # Train and validate model
 
