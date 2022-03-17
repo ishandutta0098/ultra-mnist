@@ -113,7 +113,7 @@ def save_valid_preds(id, target, pred, pred_file_path):
     df['image_id'] = id
     df['target'] = target 
     df['pred'] = pred
-    
+
 def get_oof_score(oof_file_path):
     
     df = pd.read_csv(oof_file_path)
@@ -140,3 +140,12 @@ def get_image_path(df, data):
     df['image_path'] = ["input/" + data + "/" + x + ".jpeg" for x in df['id']]
     
     return df
+
+def get_train_val_data(train_path, fold):
+
+    df = pd.read_csv(train_path)
+
+    df_train = df[df.kfold != fold].reset_index(drop=True)
+    df_valid = df[df.kfold == fold].reset_index(drop=True)
+
+    return df_train, df_valid

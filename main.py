@@ -20,6 +20,7 @@ if __name__ == "__main__":
     parser.add_argument('--config', type=str, required=True)
     parser.add_argument('--device', type=str, required=True, help='cuda or cpu')
     parser.add_argument('--environ', type=str, required=True, help='colab or local')
+    parser.add_argument('--fold', type=int, required=True)
     parser.add_argument('--check', type=bool)
 
     args = parser.parse_args()
@@ -36,10 +37,8 @@ if __name__ == "__main__":
 
     # Get paths
     TRAIN_PATH = BASE_PATH + cfg['DATA']['TRAIN_CSV']
-    VALID_PATH = BASE_PATH + cfg['DATA']['TRAIN_CSV']
+    OOF_PATH = BASE_PATH + cfg['DATA']['OOF_CSV']
 
-    PRED_PATH = BASE_PATH + cfg['PREDICT']['PRED_CSV']
-    
     # Device
     DEVICE = torch.device(args.device)
 
@@ -48,8 +47,10 @@ if __name__ == "__main__":
     model.to(DEVICE)
 
     # Load data
-    df_train = pd.read_csv(TRAIN_PATH)
-    df_valid = pd.read_csv(VALID_PATH)
+    df_train, df_valid = utils.get_train_val_data(
+                                            TRAIN_PATH, 
+                                            args.fold
+                                            )
 
     # Get Class weights for calculating Loss
     if cfg['TRAIN']['WEIGHTS'] == True:
@@ -79,7 +80,7 @@ if __name__ == "__main__":
         num_epochs=cfg['TRAIN']['EPOCHS'],
         df_train = df_train,
         df_valid = df_valid,
-        pred_csv=PRED_PATH,
+        oof_csv=OOF_PATH,
         base_path = BASE_PATH    
     )
 

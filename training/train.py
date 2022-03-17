@@ -12,7 +12,7 @@ import utilities.utils as utils
 
 from torch.cuda import amp 
 
-def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_epochs, df_train, df_valid, pred_csv, base_path):
+def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_epochs, df_train, df_valid, oof_csv, base_path):
     """
     Function to run the training and validation on a fold of data
 
@@ -27,7 +27,7 @@ def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_ep
         num_epochs (int): Number of Epochs
         df_train (pandas dataframe): Training DataFrame
         df_valid (pandas dataframe): Validation DataFrame
-        pred_csv (str): Path to save the validation predictions
+        oof_csv (str): Path to save the validation predictions
         base_path (str): Base path for the system
         
     """
@@ -54,6 +54,12 @@ def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_ep
     # Set wandb run name
     wandb.run.name = cfg['MODEL']['RUN_NAME']
     wandb.watch(model)
+
+    wandb.log(
+        {
+            'fold': args.fold,
+        }
+    )
 
     # Use amp scaler if model is running 
     # on a cuda enabled device
@@ -109,7 +115,7 @@ def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_ep
             best_model = copy.deepcopy(model)
             best_acc = val_acc
 
-            best_model_path = base_path + cfg['MODEL']['MODEL_PATH'] + "/" + cfg['MODEL']['RUN_NAME'] + "_acc_" + str(best_acc) + ".bin"
+            best_model_path = base_path + cfg['MODEL']['MODEL_PATH'] + "/" + cfg['MODEL']['RUN_NAME'] + "_" + args.fold + "_acc_" + str(best_acc) + ".bin"
 
             pred = outputs
         
@@ -151,12 +157,12 @@ def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_ep
         }
     )
 
-    # Save validation predictions
-    utils.save_valid_preds(
-        valid_ids, 
-        targets, 
-        pred, 
-        pred_file_path = pred_csv,
-    )
+    utils.save_oof(
+        id = valid_ids, 
+        target = targets, 
+        pred = pred, 
+        fold = args.fold, 
+        oof_file_path = oof_csv
+        )
 
     wandb.finish()
