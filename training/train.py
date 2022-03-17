@@ -115,7 +115,7 @@ def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_ep
             best_model = copy.deepcopy(model)
             best_acc = val_acc
 
-            best_model_path = base_path + cfg['MODEL']['MODEL_PATH'] + "/" + cfg['MODEL']['RUN_NAME'] + "_" + args.fold + "_acc_" + str(best_acc) + ".bin"
+            best_model_path = base_path + cfg['MODEL']['MODEL_PATH'] + "/" + cfg['MODEL']['RUN_NAME'] + "_" + str(args.fold) + "_acc_" + str(best_acc) + ".bin"
 
             pred = outputs
         

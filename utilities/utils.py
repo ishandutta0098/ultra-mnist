@@ -145,7 +145,7 @@ def get_train_val_data(train_path, fold):
 
     df = pd.read_csv(train_path)
 
-    df_train = df[df.kfold != fold].reset_index(drop=True)
-    df_valid = df[df.kfold == fold].reset_index(drop=True)
+    df_train = df[df.fold != fold].reset_index(drop=True)
+    df_valid = df[df.fold == fold].reset_index(drop=True)
 
     return df_train, df_valid

@@ -30,6 +30,9 @@ def make_model(cfg):
     elif 'vit' in cfg['MODEL']['MODEL_NAME']:
         model = baseline_model.ViTModel(cfg)
 
+    elif 'efficientnet' in cfg['MODEL']['MODEL_NAME']:
+        model = baseline_model.EffNetModel(cfg) 
+
     optimizer = optimizer_fn.get_optimizer(cfg, model)
     scheduler = scheduler_fn.fetch_scheduler(cfg, optimizer)
 

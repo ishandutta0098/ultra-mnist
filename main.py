@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     # Get paths
     TRAIN_PATH = BASE_PATH + cfg['DATA']['TRAIN_CSV']
-    OOF_PATH = BASE_PATH + cfg['DATA']['OOF_CSV']
+    OOF_PATH = BASE_PATH + cfg['PREDICT']['OOF_CSV']
 
     # Device
     DEVICE = torch.device(args.device)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     # Train and validate model
 
     print("\n---------------------------------------------------------")
-    print(f"########## Initialize Training ##########")
+    print(f"########## Initialize Training Fold {args.fold} ##########")
     print("---------------------------------------------------------")
     print()
 

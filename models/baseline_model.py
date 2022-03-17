@@ -76,3 +76,22 @@ class ViTModel(nn.Module):
     def forward(self, x):
         x = self.model(x)
         return x
+
+class EffNetModel(nn.Module):
+    def __init__(self, cfg):
+        super().__init__()
+
+        self.model = timm.create_model(
+            cfg['MODEL']['MODEL_NAME'], 
+            pretrained=cfg['MODEL']['PRETRAINED']
+            )
+        
+        self.model.classifier = nn.Linear(self.model.classifier.in_features, 128)
+        self.dropout = nn.Dropout(0.3)
+        self.out = nn.Linear(128, cfg['MODEL']['NUM_CLASSES'])
+
+    def forward(self, image):
+        x = self.model(image)
+        x = self.dropout(x)
+        output = self.out(x)
+        return output
