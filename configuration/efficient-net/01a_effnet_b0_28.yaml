@@ -37,5 +37,5 @@ TRAIN:
   WEIGHTS: ~
 
 PREDICT:
-  PRED_CSV: oof_preds/efficient-net/01a_effnet_b0_28.csv
-  TEST_CSV: test_outputs/efficient-net/01a_effnet_b0_28.csv
+  PRED_CSV: oof_preds/efficient_net/01a_effnet_b0_28.csv
+  TEST_CSV: test_outputs/efficient_net/01a_effnet_b0_28.csv

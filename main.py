@@ -19,7 +19,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, required=True)
     parser.add_argument('--device', type=str, required=True, help='cuda or cpu')
-    parser.add_argument('--environ', type=str, required=True, help='colab or local or ec2')
+    parser.add_argument('--environ', type=str, required=True, help='colab or local')
     parser.add_argument('--check', type=bool)
 
     args = parser.parse_args()
@@ -32,9 +32,6 @@ if __name__ == "__main__":
         BASE_PATH = cfg['DATA']['COLAB_BASE_PATH']
 
     elif args.environ == 'local':
-        BASE_PATH = cfg['DATA']['BASE_PATH']
-
-    elif args.environ == 'ec2':
         BASE_PATH = cfg['DATA']['BASE_PATH']
 
     # Get paths
