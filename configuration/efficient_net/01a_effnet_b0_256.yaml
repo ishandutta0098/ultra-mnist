@@ -6,8 +6,8 @@ DATA:
 
 MODEL:
   PROJECT_NAME: kaggle-ultra-mnist
-  RUN_NAME: 01a_effnet_b0_28
-  GROUP_NAME: 01a_effnet_b0_28.yaml
+  RUN_NAME: 01a_effnet_b0_256
+  GROUP_NAME: 01a_effnet_b0_256.yaml
   MODEL_NAME: 'efficientnet_b0'
   PRETRAINED: True
   IMAGE_SIZE: 256

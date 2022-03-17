@@ -52,7 +52,7 @@ def run_training(args, cfg, model, optimizer, scheduler, weights, device, num_ep
         )
 
     # Set wandb run name
-    wandb.run.name = cfg['MODEL']['RUN_NAME']
+    wandb.run.name = cfg['MODEL']['RUN_NAME'] + "_fold" + str(args.fold)
     wandb.watch(model)
 
     wandb.log(
