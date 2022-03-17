@@ -98,6 +98,22 @@ def save_oof(id, target, pred, fold, oof_file_path):
         df_oof = df_oof.append(df, ignore_index = True)
         df_oof.to_csv(oof_file_path, index = False)
         
+def save_valid_preds(id, target, pred, pred_file_path):
+    """
+    Function to save the model predictions.
+
+    Args:
+        id (list): List of image ids
+        target (list): List of targets
+        pred (list): List of model predictions
+        pred_file_path (str): Path for the prediction file
+    """
+
+    df = pd.DataFrame()
+    df['image_id'] = id
+    df['target'] = target 
+    df['pred'] = pred
+    
 def get_oof_score(oof_file_path):
     
     df = pd.read_csv(oof_file_path)
